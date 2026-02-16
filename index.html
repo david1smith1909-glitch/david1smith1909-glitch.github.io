@@ -187,7 +187,7 @@ async function sendMessage(){
 
   try {
     // IMPORTANT: REPLACE THIS URL WITH YOUR ACTUAL VERCEL DEPLOYMENT URL
-    const res = await fetch("https://your-project-name.vercel.app/api/chat", {
+    const res = await fetch("https://your-actual-vercel-app-url.vercel.app/api/chat", {
       method: "POST",
       headers: {"Content-Type": "application/json"},
       body: JSON.stringify({ message: msg })
