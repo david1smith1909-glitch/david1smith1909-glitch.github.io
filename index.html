@@ -30,7 +30,7 @@ h1,h2,h3{font-family:'Space Grotesk',sans-serif;color:#fff}
 .text-visible{color:#fff;text-shadow:0 1px 2px rgba(0,0,0,0.3)}
 .text-accent{color:#00ced1;text-shadow:0 1px 2px rgba(0,0,0,0.5)}
 
-/* CHATBOT STYLES FROM INDEX(2) */
+/* CHATBOT STYLES */
 #chat-toggle{position:fixed;bottom:25px;right:25px;width:65px;height:65px;background:linear-gradient(135deg,#008b8b,#00ced1);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 8px 24px rgba(0,206,209,0.5);z-index:9999;transition:all 0.3s ease}
 #qa-chatbot{position:fixed;bottom:110px;right:25px;width:380px;background:rgba(2,0,53,0.98);border-radius:20px;border:2px solid rgba(0,206,209,0.5);box-shadow:0 20px 60px rgba(0,0,0,0.7);display:none;flex-direction:column;overflow:hidden;z-index:9998;animation:slideUp 0.3s ease}
 #qa-chatbot.active{display:flex}
@@ -167,10 +167,16 @@ h1,h2,h3{font-family:'Space Grotesk',sans-serif;color:#fff}
 </div>
 
 <script>
+/* INITIALIZE ICONS */
 lucide.createIcons();
 
 /* --- CHATBOT LOGIC --- */
-const toggle=document.getElementById("chat-toggle"), chatbot=document.getElementById("qa-chatbot"), chatClose=document.getElementById("chat-close"), chatInput=document.getElementById("chat-input"), chatSend=document.getElementById("chat-send"), chatBody=document.getElementById("chat-body");
+const toggle=document.getElementById("chat-toggle"), 
+      chatbot=document.getElementById("qa-chatbot"), 
+      chatClose=document.getElementById("chat-close"), 
+      chatInput=document.getElementById("chat-input"), 
+      chatSend=document.getElementById("chat-send"), 
+      chatBody=document.getElementById("chat-body");
 
 toggle.onclick=()=>{chatbot.classList.toggle("active"); if(chatbot.classList.contains("active")) chatInput.focus();};
 chatClose.onclick=(e)=>{e.stopPropagation(); chatbot.classList.remove("active");};
@@ -186,7 +192,6 @@ async function sendMessage(){
   chatBody.scrollTop = chatBody.scrollHeight;
 
   try {
-    // UPDATED WITH YOUR REAL VERCEL DOMAIN FROM THE SCREENSHOT
     const res = await fetch("https://qa-chatbot-api.vercel.app/api/chat", {
       method: "POST",
       headers: {"Content-Type": "application/json"},
@@ -198,36 +203,65 @@ async function sendMessage(){
     chatBody.innerHTML += `<div class='msg-bot'>${data.reply}</div>`;
   } catch (e) {
     document.getElementById(tId)?.remove();
-    chatBody.innerHTML += `<div class='msg-bot'>I'm currently unable to reach the AI server. Please contact Alok Singh at aloksingh00704@gmail.com for consulting queries.</div>`;
+    chatBody.innerHTML += `<div class='msg-bot'>I'm currently unable to reach the AI server. Please contact Alok Singh at aloksingh00704@gmail.com.</div>`;
   }
   chatBody.scrollTop = chatBody.scrollHeight;
 }
 
-  try {
-    // IMPORTANT: REPLACE THIS URL WITH YOUR ACTUAL VERCEL DEPLOYMENT URL
-    const res = await fetch("https://https://qa-chatbot-api.vercel.app/api/chat", {
-      method: "POST",
-      headers: {"Content-Type": "application/json"},
-      body: JSON.stringify({ message: msg })
-    });
-    const data = await res.json();
-    document.getElementById(tId)?.remove();
-    chatBody.innerHTML += `<div class='msg-bot'>${data.reply}</div>`;
-  } catch (e) {
-    document.getElementById(tId)?.remove();
-    chatBody.innerHTML += `<div class='msg-bot'>I'm currently unable to reach the AI server. Please contact Alok Singh at aloksingh00704@gmail.com for consulting queries.</div>`;
-  }
-  chatBody.scrollTop = chatBody.scrollHeight;
-}
 chatSend.onclick = sendMessage;
 chatInput.onkeydown = e => { if(e.key === "Enter") sendMessage(); };
 
 /* --- CHART LOGIC --- */
 window.addEventListener('DOMContentLoaded', () => {
-  const cfg = { responsive: true, maintainAspectRatio: false, plugins: { legend: { labels: { color: '#fff' } } }, scales: { y: { ticks: { color: '#fff' } }, x: { ticks: { color: '#fff' } } } };
-  new Chart(document.getElementById('releaseChart'), { type: 'bar', data: { labels: ['Q1','Q2','Q3','Q4','Q1 26'], datasets: [{ label: 'Planned', data: [25,65,34,10,12], backgroundColor: 'rgba(255,255,255,0.4)' },{ label: 'Released', data: [20,57,30,9,12], backgroundColor: 'rgba(0,206,209,0.8)' }] }, options: cfg });
-  new Chart(document.getElementById('defectChart'), { type: 'bar', data: { labels: ['Q1','Q2','Q3','Q4','Q1 26'], datasets: [{ label: 'Total', data: [1020,1350,780,320,220], backgroundColor: 'rgba(255,255,255,0.4)' },{ label: 'Prod', data: [52,62,36,18,6], backgroundColor: 'rgba(244,67,54,0.8)' }] }, options: cfg });
-  new Chart(document.getElementById('incidentChart'), { type: 'line', data: { labels: ['Q1','Q2','Q3','Q4','Q1 26'], datasets: [{ label: 'Incidents', data: [12,7,4,2,1], borderColor: '#00ced1', backgroundColor: 'rgba(0,206,209,0.2)', fill: true, tension: 0.4 }] }, options: cfg });
+  const cfg = { 
+    responsive: true, 
+    maintainAspectRatio: false, 
+    plugins: { legend: { labels: { color: '#fff' } } }, 
+    scales: { 
+        y: { grid: {color: 'rgba(255,255,255,0.1)'}, ticks: { color: '#fff' } }, 
+        x: { grid: {color: 'rgba(255,255,255,0.1)'}, ticks: { color: '#fff' } } 
+    } 
+  };
+  
+  new Chart(document.getElementById('releaseChart'), { 
+    type: 'bar', 
+    data: { 
+        labels: ['Q1','Q2','Q3','Q4','Q1 26'], 
+        datasets: [
+            { label: 'Planned', data: [25,65,34,10,12], backgroundColor: 'rgba(255,255,255,0.4)' },
+            { label: 'Released', data: [20,57,30,9,12], backgroundColor: 'rgba(0,206,209,0.8)' }
+        ] 
+    }, 
+    options: cfg 
+  });
+
+  new Chart(document.getElementById('defectChart'), { 
+    type: 'bar', 
+    data: { 
+        labels: ['Q1','Q2','Q3','Q4','Q1 26'], 
+        datasets: [
+            { label: 'Total', data: [1020,1350,780,320,220], backgroundColor: 'rgba(255,255,255,0.4)' },
+            { label: 'Prod', data: [52,62,36,18,6], backgroundColor: 'rgba(244,67,54,0.8)' }
+        ] 
+    }, 
+    options: cfg 
+  });
+
+  new Chart(document.getElementById('incidentChart'), { 
+    type: 'line', 
+    data: { 
+        labels: ['Q1','Q2','Q3','Q4','Q1 26'], 
+        datasets: [{ 
+            label: 'Incidents', 
+            data: [12,7,4,2,1], 
+            borderColor: '#00ced1', 
+            backgroundColor: 'rgba(0,206,209,0.2)', 
+            fill: true, 
+            tension: 0.4 
+        }] 
+    }, 
+    options: cfg 
+  });
 });
 </script>
 </body>
