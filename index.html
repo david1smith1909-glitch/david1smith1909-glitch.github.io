@@ -184,7 +184,9 @@ chatClose.onclick=(e)=>{e.stopPropagation(); chatbot.classList.remove("active");
 function quickAsk(text){ chatInput.value = text; sendMessage(); }
 
 async function sendMessage(){
-  const msg = chatInput.value.trim(); if(!msg) return;
+  const msg = chatInput.value.trim(); 
+  if(!msg) return;
+  
   chatInput.value = "";
   chatBody.innerHTML += `<div class='msg-user'>${msg}</div>`;
   const tId = 't'+Date.now();
@@ -192,18 +194,24 @@ async function sendMessage(){
   chatBody.scrollTop = chatBody.scrollHeight;
 
   try {
-    const res = await fetch("https://qa-chatbot-api.vercel.app/api/chat", {
+    // Call your own API endpoint (not external URL)
+    const res = await fetch("/api/chat", {
       method: "POST",
       headers: {"Content-Type": "application/json"},
       body: JSON.stringify({ message: msg })
     });
     
+    if (!res.ok) {
+      throw new Error('API call failed');
+    }
+    
     const data = await res.json();
     document.getElementById(tId)?.remove();
     chatBody.innerHTML += `<div class='msg-bot'>${data.reply}</div>`;
   } catch (e) {
+    console.error('Chatbot error:', e);
     document.getElementById(tId)?.remove();
-    chatBody.innerHTML += `<div class='msg-bot'>I'm currently unable to reach the AI server. Please contact Alok Singh at aloksingh00704@gmail.com.</div>`;
+    chatBody.innerHTML += `<div class='msg-bot'>For expert QA guidance, please contact Alok at aloksingh00704@gmail.com or schedule a consultation call.</div>`;
   }
   chatBody.scrollTop = chatBody.scrollHeight;
 }
