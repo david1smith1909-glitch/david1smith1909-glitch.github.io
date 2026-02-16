@@ -186,8 +186,26 @@ async function sendMessage(){
   chatBody.scrollTop = chatBody.scrollHeight;
 
   try {
+    // UPDATED WITH YOUR REAL VERCEL DOMAIN FROM THE SCREENSHOT
+    const res = await fetch("https://qa-chatbot-api.vercel.app/api/chat", {
+      method: "POST",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({ message: msg })
+    });
+    
+    const data = await res.json();
+    document.getElementById(tId)?.remove();
+    chatBody.innerHTML += `<div class='msg-bot'>${data.reply}</div>`;
+  } catch (e) {
+    document.getElementById(tId)?.remove();
+    chatBody.innerHTML += `<div class='msg-bot'>I'm currently unable to reach the AI server. Please contact Alok Singh at aloksingh00704@gmail.com for consulting queries.</div>`;
+  }
+  chatBody.scrollTop = chatBody.scrollHeight;
+}
+
+  try {
     // IMPORTANT: REPLACE THIS URL WITH YOUR ACTUAL VERCEL DEPLOYMENT URL
-    const res = await fetch("https://your-actual-vercel-app-url.vercel.app/api/chat", {
+    const res = await fetch("https://https://qa-chatbot-api.vercel.app/api/chat", {
       method: "POST",
       headers: {"Content-Type": "application/json"},
       body: JSON.stringify({ message: msg })
