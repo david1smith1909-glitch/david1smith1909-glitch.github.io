@@ -7,10 +7,8 @@
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://unpkg.com/lucide@latest"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@700&display=swap');
-
 *{margin:0;padding:0;box-sizing:border-box}
 body{
   font-family:'Inter',sans-serif;
@@ -19,279 +17,199 @@ body{
   min-height:100vh;
   overflow-x:hidden;
 }
-h1,h2,h3{font-family:'Space Grotesk',sans-serif}
-.glass{background:rgba(255,255,255,.15);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.25)}
+h1,h2,h3{font-family:'Space Grotesk',sans-serif;color:#fff}
+.glass{background:rgba(255,255,255,0.15);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,0.25)}
 .section-container{max-width:1400px;margin:0 auto;padding:0 1.5rem}
-.chart-wrapper{position:relative;height:340px;width:100%}
-@media(max-width:768px){.chart-wrapper{height:260px}}
-.calendar-container{background:#fff;border-radius:1.5rem;overflow:hidden;max-width:700px;margin:0 auto}
-.hover-lift{transition:transform .3s}
+.chart-wrapper{position:relative;height:360px;width:100%;max-width:100%}
+@media (max-width:768px){.chart-wrapper{height:280px}}
+.calendar-container{background:#fff;border-radius:1.5rem;overflow:hidden;box-shadow:0 25px 50px -12px rgba(0,0,0,0.4);max-width:700px;margin:0 auto}
+.hover-lift{transition:transform 0.3s}
 .hover-lift:hover{transform:translateY(-8px)}
-.btn-gradient{background:linear-gradient(135deg,#008b8b,#00ced1);color:#fff;font-weight:bold}
-.text-accent{color:#00ced1}
+.btn-gradient{background:linear-gradient(135deg,#008b8b,#00ced1);box-shadow:0 4px 15px rgba(0,206,209,0.5);color:#fff;font-weight:bold}
+.btn-gradient:hover{box-shadow:0 6px 20px rgba(0,206,209,0.7);transform:translateY(-2px)}
+.text-visible{color:#fff;text-shadow:0 1px 2px rgba(0,0,0,0.3)}
+.text-accent{color:#00ced1;text-shadow:0 1px 2px rgba(0,0,0,0.5)}
 
-/* ================= CHATBOT V2 ================= */
-
-#chat-toggle{
-  position:fixed;
-  bottom:25px;
-  right:25px;
-  width:65px;
-  height:65px;
-  border:none;
-  border-radius:50%;
-  background:linear-gradient(135deg,#008b8b,#00ced1);
-  box-shadow:0 8px 24px rgba(0,206,209,.5);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  cursor:pointer;
-  z-index:9999;
-  transition:.3s;
-}
-#chat-toggle:hover{transform:scale(1.08)}
-#chat-toggle svg{width:30px;height:30px;color:white}
-
-#qa-chatbot{
-  position:fixed;
-  bottom:100px;
-  right:25px;
-  width:360px;
-  max-height:520px;
-  background:rgba(2,0,53,.96);
-  border:1px solid rgba(0,206,209,.5);
-  border-radius:18px;
-  display:none;
-  flex-direction:column;
-  overflow:hidden;
-  box-shadow:0 20px 60px rgba(0,0,0,.7);
-  z-index:9998;
-}
+/* MODIFIED CHATBOT STYLES FROM INDEX(2) */
+#chat-toggle{position:fixed;bottom:25px;right:25px;width:65px;height:65px;background:linear-gradient(135deg,#008b8b,#00ced1);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 8px 24px rgba(0,206,209,0.5);z-index:9999;transition:all 0.3s ease}
+#qa-chatbot{position:fixed;bottom:110px;right:25px;width:380px;background:rgba(2,0,53,0.98);border-radius:20px;border:2px solid rgba(0,206,209,0.5);box-shadow:0 20px 60px rgba(0,0,0,0.7);display:none;flex-direction:column;overflow:hidden;z-index:9998;animation:slideUp 0.3s ease}
 #qa-chatbot.active{display:flex}
-
-#chat-header{
-  padding:14px 16px;
-  background:linear-gradient(135deg,#008b8b,#00ced1);
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  font-weight:700;
-}
-#chat-close{cursor:pointer}
-
-#chat-body{
-  height:320px;
-  overflow-y:auto;
-  padding:14px;
-  background:rgba(0,0,0,.3);
-}
-.msg-user{
-  background:linear-gradient(135deg,#008b8b,#00ced1);
-  padding:10px 14px;
-  border-radius:14px 14px 4px 14px;
-  margin:8px 0;
-  max-width:80%;
-  margin-left:auto;
-}
-.msg-bot{
-  background:rgba(255,255,255,.12);
-  padding:10px 14px;
-  border-radius:14px 14px 14px 4px;
-  margin:8px 0;
-  max-width:85%;
-}
-.quick-btn{
-  border:1px solid #00ced1;
-  background:transparent;
-  color:#00ced1;
-  padding:4px 8px;
-  border-radius:6px;
-  font-size:11px;
-  cursor:pointer;
-}
-
-#chat-input-container{
-  display:flex;
-  padding:12px;
-  background:rgba(0,0,0,.5);
-}
-#chat-input{
-  flex:1;
-  border:none;
-  border-radius:20px;
-  padding:10px 14px;
-  background:rgba(255,255,255,.12);
-  color:white;
-}
-#chat-send{
-  margin-left:8px;
-  border:none;
-  border-radius:20px;
-  padding:10px 14px;
-  background:linear-gradient(135deg,#008b8b,#00ced1);
-  color:white;
-  cursor:pointer;
-}
-
+@keyframes slideUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+#chat-header{padding:20px;background:linear-gradient(135deg,#008b8b,#00ced1);font-weight:bold;text-align:center;color:#fff;display:flex;align-items:center;justify-content:space-between}
+#chat-body{height:350px;overflow-y:auto;padding:20px;background:rgba(0,0,0,0.4)}
+.msg-user{background:linear-gradient(135deg,#008b8b,#00ced1);color:#fff;padding:12px 16px;border-radius:18px 18px 4px 18px;margin:10px 0;max-width:80%;margin-left:auto;word-wrap:break-word}
+.msg-bot{background:rgba(255,255,255,0.1);color:#fff;padding:12px 16px;border-radius:18px 18px 18px 4px;margin:10px 0;max-width:85%;line-height:1.6;word-wrap:break-word}
+.quick-btn{border:1px solid #00ced1;background:transparent;color:#00ced1;padding:6px 10px;border-radius:8px;font-size:12px;cursor:pointer;margin:4px;transition:all 0.2s}
+.quick-btn:hover{background:rgba(0,206,209,0.1)}
+#chat-input-container{display:flex;padding:15px;background:rgba(0,0,0,0.5);border-top:1px solid rgba(0,206,209,0.3)}
+#chat-input{flex:1;padding:12px 16px;border:none;outline:none;background:rgba(255,255,255,0.1);color:#fff;border-radius:25px}
+#chat-send{margin-left:10px;padding:12px 20px;background:linear-gradient(135deg,#008b8b,#00ced1);border:none;border-radius:25px;color:#fff;font-weight:bold;cursor:pointer}
 .typing{font-size:12px;color:#00ced1;margin-top:6px}
-
-@media(max-width:500px){
-  #qa-chatbot{width:90%;right:5%}
-}
 </style>
 </head>
-
 <body>
 
-<!-- NAV -->
 <nav class="fixed w-full z-50 glass border-b border-white/30">
 <div class="section-container">
 <div class="h-20 flex justify-between items-center">
-<div class="text-xl font-bold">Alok Kumar</div>
-<div class="hidden lg:flex space-x-8">
-<a href="index.html">Home</a>
-<a href="about.html">About</a>
-<a href="case-studies.html">Case Studies</a>
-<a href="blog.html">Insights</a>
-<a href="contact.html">Contact</a>
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg flex items-center justify-center btn-gradient shadow-lg"><span class="text-white font-bold text-lg">AK</span></div>
+<div><div class="text-xl font-bold text-visible">Alok Kumar</div><div class="text-xs text-accent uppercase tracking-wide">Enterprise QA Advisor</div></div>
+</div>
+<div class="hidden lg:flex items-center space-x-8">
+<a href="index.html" class="text-sm font-semibold text-white uppercase hover:text-accent transition">Home</a>
+<a href="about.html" class="text-sm font-semibold text-white/90 hover:text-accent uppercase transition">About</a>
+<a href="case-studies.html" class="text-sm font-semibold text-white/90 hover:text-accent uppercase transition">Case Studies</a>
+<a href="blog.html" class="text-sm font-semibold text-white/90 hover:text-accent uppercase transition">Insights</a>
+<a href="contact.html" class="text-sm font-semibold text-white/90 hover:text-accent uppercase transition">Contact</a>
+<a href="#schedule" class="px-6 py-3 btn-gradient rounded-lg text-sm uppercase transition">Schedule Call</a>
 </div>
 </div>
 </div>
 </nav>
 
-<!-- HERO -->
 <section class="pt-32 pb-20 px-6">
 <div class="section-container">
-<h1 class="text-5xl font-bold mb-6">Enterprise QA Governance Consultant</h1>
-<p class="text-xl">Helping enterprises ship stable software with predictable releases.</p>
+<div class="grid lg:grid-cols-2 gap-16 items-center">
+<div>
+<div class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass mb-6">
+<span class="w-2 h-2 bg-accent rounded-full animate-pulse"></span>
+<span class="text-visible text-sm font-semibold uppercase">Available for Enterprise Engagements</span>
 </div>
-</section>
-
-<!-- CHARTS -->
-<section class="py-20 px-6">
-<div class="section-container grid lg:grid-cols-2 gap-8">
-<div class="glass p-6 rounded-2xl">
-<h3 class="mb-4">Quarterly Release Delivery</h3>
-<div class="chart-wrapper"><canvas id="releaseChart"></canvas></div>
+<h1 class="text-5xl lg:text-6xl font-bold text-visible leading-tight mb-6">Enterprise Release &<br/><span class="text-accent">QA Governance</span><br/>Consultant</h1>
+<p class="text-xl lg:text-2xl text-visible mb-4">Helping enterprises ship stable software with predictable releases.</p>
+<p class="text-lg text-white/90 mb-10">Trusted by Meta, Tech Mahindra, and global SaaS platforms.</p>
+<div class="flex flex-wrap gap-4">
+<a href="#schedule" class="px-8 py-4 btn-gradient rounded-lg flex items-center gap-2 shadow-lg transition"><i data-lucide="calendar-check" class="w-5 h-5"></i> Schedule Strategy Call</a>
+<a href="about.html" class="px-8 py-4 glass text-white font-bold rounded-lg flex items-center gap-2 transition hover:bg-white/20"><i data-lucide="user-circle" class="w-5 h-5"></i> View Profile</a>
 </div>
-
-<div class="glass p-6 rounded-2xl">
-<h3 class="mb-4">Quarterly QA Defect Metrics</h3>
-<div class="chart-wrapper"><canvas id="defectChart"></canvas></div>
+</div>
+<div class="glass p-2 rounded-3xl shadow-2xl">
+<img src="assets/alok-professional.jpeg" alt="Alok Kumar" class="w-full h-full object-cover rounded-2xl" style="min-height:400px;background:#003d5c">
+</div>
 </div>
 </div>
 </section>
 
 <section class="py-20 px-6">
 <div class="section-container">
-<div class="glass p-6 rounded-2xl">
-<h3 class="mb-4">Production Incidents Trend</h3>
-<div class="chart-wrapper"><canvas id="incidentChart"></canvas></div>
+<h2 class="text-4xl font-bold text-visible mb-12 text-center">Enterprise Outcomes Delivered</h2>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-6">
+<div class="glass p-8 rounded-2xl text-center hover-lift"><div class="text-5xl font-black text-accent mb-3">$1.67M</div><div class="text-sm text-visible uppercase">Revenue Protected</div></div>
+<div class="glass p-8 rounded-2xl text-center hover-lift"><div class="text-5xl font-black text-accent mb-3">100+</div><div class="text-sm text-visible uppercase">Enterprise Releases</div></div>
+<div class="glass p-8 rounded-2xl text-center hover-lift"><div class="text-5xl font-black text-accent mb-3">40%</div><div class="text-sm text-visible uppercase">Defect Reduction</div></div>
+<div class="glass p-8 rounded-2xl text-center hover-lift"><div class="text-5xl font-black text-accent mb-3">19</div><div class="text-sm text-visible uppercase">Global UAT Regions</div></div>
 </div>
 </div>
 </section>
 
-<!-- CALENDAR -->
+<section class="py-24 px-6">
+<div class="section-container">
+<div class="text-center mb-12">
+<h2 class="text-4xl font-bold text-visible mb-4">Quality & Delivery Dashboard</h2>
+<p class="text-lg text-white/90 max-w-3xl mx-auto">Quarterly performance and production stability trends.</p>
+</div>
+
+<div class="grid lg:grid-cols-2 gap-8 mb-8">
+  <div class="glass p-10 rounded-2xl">
+    <h3 class="text-2xl font-bold text-visible mb-6">Release Delivery Performance</h3>
+    <div class="chart-wrapper"><canvas id="releaseChart"></canvas></div>
+    <div class="mt-6 p-4 glass rounded-lg"><p class="text-white text-sm"><strong class="text-accent">Executive Insight:</strong> Release reliability improved from <strong>80% → 100%</strong>.</p></div>
+  </div>
+  <div class="glass p-10 rounded-2xl">
+    <h3 class="text-2xl font-bold text-visible mb-6">Quarterly QA Defect Metrics</h3>
+    <div class="chart-wrapper"><canvas id="defectChart"></canvas></div>
+    <div class="mt-6 p-4 glass rounded-lg"><p class="text-white text-sm"><strong class="text-accent">Executive Insight:</strong> Defect leakage reduced from <strong>5.1% → 2.7%</strong>.</p></div>
+  </div>
+</div>
+
+<div class="glass p-10 rounded-2xl">
+  <h3 class="text-2xl font-bold text-visible mb-6">Production Incidents Trend</h3>
+  <div class="chart-wrapper"><canvas id="incidentChart"></canvas></div>
+  <div class="mt-6 p-4 glass rounded-lg"><p class="text-white text-sm"><strong class="text-accent">Executive Insight:</strong> <strong>91% reduction</strong> in production incidents (12 → 1).</p></div>
+</div>
+</div>
+</section>
+
 <section id="schedule" class="py-24 px-6">
 <div class="section-container">
+<div class="text-center mb-12"><h2 class="text-4xl font-bold text-visible mb-6">Schedule Your Strategy Call</h2></div>
 <div class="calendar-container">
-<iframe src="https://calendar.google.com/calendar/appointments/schedules/AcZssZ2UyJT1TfGMoEbUQQQL2GovYrDvHvXT6cYFmhA1kIUwzMixVRJP6Ki-Zts_0fucAE7rqOFy6vRM?gv=true" width="100%" height="500"></iframe>
+<iframe src="https://calendar.google.com/calendar/appointments/schedules/AcZssZ2UyJT1TfGMoEbUQQQL2GovYrDvHvXT6cYFmhA1kIUwzMixVRJP6Ki-Zts_0fucAE7rqOFy6vRM?gv=true" width="100%" height="500" frameborder="0"></iframe>
 </div>
 </div>
 </section>
 
-<!-- FOOTER -->
-<footer class="py-10 px-6 text-center">
-© 2026 Alok Kumar
+<footer class="py-12 px-6 border-t border-white/20" style="background:rgba(2,0,53,0.9)">
+<div class="section-container">
+<div class="grid md:grid-cols-3 gap-8 mb-8">
+<div>
+<div class="flex items-center gap-2 mb-4"><div class="w-8 h-8 btn-gradient rounded-lg flex items-center justify-center"><span class="text-white font-bold text-sm">AK</span></div><span class="text-white font-bold">Alok Kumar</span></div>
+<p class="text-white/80 text-sm">Enterprise QA & Release Governance Consultant</p>
+</div>
+<div>
+<h4 class="text-white font-bold mb-4 uppercase text-sm">Quick Links</h4>
+<ul class="space-y-2 text-white/80 text-sm">
+<li><a href="about.html" class="hover:text-accent transition">About</a></li>
+<li><a href="case-studies.html" class="hover:text-accent transition">Case Studies</a></li>
+<li><a href="blog.html" class="hover:text-accent transition">Insights</a></li>
+<li><a href="contact.html" class="hover:text-accent transition">Contact</a></li>
+</ul>
+</div>
+<div>
+<h4 class="text-white font-bold mb-4 uppercase text-sm">Contact</h4>
+<div class="space-y-3">
+<a href="https://www.linkedin.com/in/alok-kumar-8a39466b/" target="_blank" class="flex items-center gap-3 text-white/80 hover:text-accent transition"><div class="w-10 h-10 glass rounded-lg flex items-center justify-center"><i data-lucide="linkedin" class="w-5 h-5"></i></div><span class="text-sm font-semibold">LinkedIn</span></a>
+<a href="mailto:aloksingh00704@gmail.com" class="flex items-center gap-3 text-white/80 hover:text-accent transition"><div class="w-10 h-10 glass rounded-lg flex items-center justify-center"><i data-lucide="mail" class="w-5 h-5"></i></div><span class="text-sm font-semibold">aloksingh00704@gmail.com</span></a>
+<a href="https://wa.me/917043591303" target="_blank" class="flex items-center gap-3 text-white/80 hover:text-accent transition"><div class="w-10 h-10 glass rounded-lg flex items-center justify-center"><i data-lucide="message-circle" class="w-5 h-5"></i></div><span class="text-sm font-semibold">WhatsApp</span></a>
+</div>
+</div>
+</div>
+<div class="pt-8 border-t border-white/20 text-center text-white/70 text-sm">
+<p>&copy; 2026 Alok Kumar. Enterprise QA & Release Governance Consultant.</p>
+</div>
+</div>
 </footer>
 
-<!-- ========== CHATBOT V2 ========== -->
-
-<button id="chat-toggle"><i data-lucide="message-circle"></i></button>
-
+<div id="chat-toggle"><i data-lucide="message-circle"></i></div>
 <div id="qa-chatbot">
-  <div id="chat-header">
-    <div>💬 QA Consultant Assistant</div>
-    <div id="chat-close"><i data-lucide="x"></i></div>
-  </div>
-
-  <div id="chat-body">
-    <div class="msg-bot">
-      Hi 👋 Ask me about release governance, UAT, or defect reduction.
-    </div>
-
-    <button class="quick-btn" onclick="quickAsk('How do you reduce production bugs?')">Reduce Bugs</button>
-    <button class="quick-btn" onclick="quickAsk('What is QA governance?')">QA Governance</button>
-  </div>
-
-  <div id="chat-input-container">
-    <input id="chat-input" placeholder="Ask your QA question..." />
-    <button id="chat-send">Send</button>
-  </div>
+  <div id="chat-header"><div id="chat-header-title">💬 QA Consultant Assistant</div><div id="chat-close"><i data-lucide="x" style="width:20px;height:20px"></i></div></div>
+  <div id="chat-body"><div class="msg-bot">Hi 👋 Ask me about release governance, UAT, or defect reduction.</div><button class="quick-btn" onclick="quickAsk('How do you reduce production bugs?')">Reduce Bugs</button><button class="quick-btn" onclick="quickAsk('What is QA governance?')">QA Governance</button></div>
+  <div id="chat-input-container"><input id="chat-input" placeholder="Ask your QA question..." /><button id="chat-send">Send</button></div>
 </div>
 
 <script>
 lucide.createIcons();
 
-/* CHATBOT */
-const toggle=document.getElementById("chat-toggle");
-const bot=document.getElementById("qa-chatbot");
-const close=document.getElementById("chat-close");
-const input=document.getElementById("chat-input");
-const body=document.getElementById("chat-body");
-
-toggle.onclick=()=>bot.classList.toggle("active");
-close.onclick=()=>bot.classList.remove("active");
-
-function quickAsk(text){input.value=text;sendMessage();}
-
+/* CHATBOT LOGIC FROM INDEX(2) */
+const toggle=document.getElementById("chat-toggle"), chatbot=document.getElementById("qa-chatbot"), chatClose=document.getElementById("chat-close"), chatInput=document.getElementById("chat-input"), chatSend=document.getElementById("chat-send"), chatBody=document.getElementById("chat-body");
+toggle.onclick=()=>{chatbot.classList.toggle("active"); if(chatbot.classList.contains("active")) chatInput.focus()};
+chatClose.onclick=(e)=>{e.stopPropagation(); chatbot.classList.remove("active")};
+function quickAsk(t){chatInput.value=t; sendMessage()}
 async function sendMessage(){
- const msg=input.value.trim(); if(!msg) return;
- input.value="";
- body.innerHTML += `<div class='msg-user'>${msg}</div>`;
- body.innerHTML += `<div class='typing' id='typing'>AI is typing...</div>`;
- body.scrollTop=body.scrollHeight;
-
- const res=await fetch("https://qa-chatbot-api.vercel.app/api/chat",{
-  method:"POST",
-  headers:{"Content-Type":"application/json"},
-  body:JSON.stringify({message:msg})
- });
-
- const data=await res.json();
- document.getElementById("typing")?.remove();
- body.innerHTML += `<div class='msg-bot'>${data.reply}</div>`;
- body.scrollTop=body.scrollHeight;
+  const m=chatInput.value.trim(); if(!m) return;
+  chatInput.value=""; chatBody.innerHTML += `<div class='msg-user'>${m}</div>`;
+  const tId = 't'+Date.now(); chatBody.innerHTML += `<div class='typing' id='${tId}'>AI is typing...</div>`;
+  chatBody.scrollTop=chatBody.scrollHeight;
+  try {
+    const r=await fetch("https://qa-chatbot-api.vercel.app/api/chat",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({message:m})});
+    const d=await r.json(); document.getElementById(tId)?.remove();
+    chatBody.innerHTML += `<div class='msg-bot'>${d.reply}</div>`;
+  } catch(e) {
+    document.getElementById(tId)?.remove();
+    chatBody.innerHTML += `<div class='msg-bot'>Sorry, I'm having trouble connecting. Please contact Alok at aloksingh00704@gmail.com.</div>`;
+  }
+  chatBody.scrollTop=chatBody.scrollHeight;
 }
-document.getElementById("chat-send").onclick=sendMessage;
-input.addEventListener("keydown",e=>{if(e.key==="Enter")sendMessage();});
+chatInput.onkeydown=e=>{if(e.key==="Enter")sendMessage()}; chatSend.onclick=sendMessage;
 
-/* CHARTS — DATA UNCHANGED */
-new Chart(document.getElementById('releaseChart'),{
- type:'bar',
- data:{labels:['Q1 2025','Q2 2025','Q3 2025','Q4 2025','Q1 2026'],
- datasets:[
- {label:'Planned',data:[25,65,34,10,12]},
- {label:'Released',data:[20,57,30,9,12]},
- {label:'In Progress',data:[2,5,4,1,0]}
- ]}
-});
-
-new Chart(document.getElementById('defectChart'),{
- type:'bar',
- data:{labels:['Q1 2025','Q2 2025','Q3 2025','Q4 2025','Q1 2026'],
- datasets:[
- {label:'Total Defects',data:[1020,1350,780,320,220]},
- {label:'Prod Defects',data:[52,62,36,18,6]}
- ]}
-});
-
-new Chart(document.getElementById('incidentChart'),{
- type:'line',
- data:{labels:['Q1 2025','Q2 2025','Q3 2025','Q4 2025','Q1 2026'],
- datasets:[{label:'Incidents',data:[12,7,4,2,1]}]}
+/* CHART LOGIC FROM INDEX(2) */
+window.addEventListener('DOMContentLoaded', ()=>{
+  const cfg={responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:'#fff'}}},scales:{y:{ticks:{color:'#fff'}},x:{ticks:{color:'#fff'}}}}
+  new Chart(document.getElementById('releaseChart'),{type:'bar',data:{labels:['Q1','Q2','Q3','Q4','Q1 26'],datasets:[{label:'Planned',data:[25,65,34,10,12],backgroundColor:'rgba(255,255,255,0.4)'},{label:'Released',data:[20,57,30,9,12],backgroundColor:'rgba(0,206,209,0.8)'}]},options:cfg});
+  new Chart(document.getElementById('defectChart'),{type:'bar',data:{labels:['Q1','Q2','Q3','Q4','Q1 26'],datasets:[{label:'Total',data:[1020,1350,780,320,220],backgroundColor:'rgba(255,255,255,0.4)'},{label:'Prod',data:[52,62,36,18,6],backgroundColor:'rgba(244,67,54,0.8)'}]},options:cfg});
+  new Chart(document.getElementById('incidentChart'),{type:'line',data:{labels:['Q1','Q2','Q3','Q4','Q1 26'],datasets:[{label:'Incidents',data:[12,7,4,2,1],borderColor:'#00ced1',backgroundColor:'rgba(0,206,209,0.2)',fill:true,tension:0.4}]},options:cfg});
 });
 </script>
-
 </body>
 </html>
