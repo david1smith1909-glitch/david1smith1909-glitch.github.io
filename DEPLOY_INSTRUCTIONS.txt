@@ -1,0 +1,17 @@
+COMPLETE DEPLOYMENT GUIDE
+
+ALL ISSUES FIXED:
+- Charts loading properly
+- Icons visible
+- Text readable on gradient
+- About page: contact ONLY in footer
+- AI chatbot working
+
+DEPLOY TO VERCEL:
+1. Get API key: https://makersuite.google.com/app/apikey
+2. npm install -g vercel
+3. vercel
+4. vercel env add GEMINI_API_KEY
+5. vercel --prod
+
+Contact: aloksingh00704@gmail.com

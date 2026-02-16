@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Insights | Alok Kumar</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://unpkg.com/lucide@latest"></script>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Space+Grotesk:wght@700&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',sans-serif;background:linear-gradient(135deg,#020035 0%,#003d5c 50%,#008b8b 100%);color:#e2e8f0}
+h1,h2,h3{font-family:'Space Grotesk',sans-serif}
+.glass{background:rgba(255,255,255,0.04);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,0.08)}
+.text-gradient{background:linear-gradient(135deg,#00ced1,#06b6d4,#0ea5e9);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.bg-gradient-teal{background:linear-gradient(135deg,#008b8b 0%,#06b6d4 50%,#0284c7 100%)}
+.section-container{max-width:1400px;margin:0 auto;padding:0 1.5rem}
+.hover-lift{transition:transform 0.3s}
+.hover-lift:hover{transform:translateY(-8px)}
+.section-dark{background:linear-gradient(135deg,#020035,#003d5c)}
+.footer-dark{background:linear-gradient(180deg,#0f1728 0%,#050b14 100%)}
+</style>
+</head>
+
+<body>
+
+<!-- NAV -->
+<nav class="fixed w-full z-50 glass border-b border-white/5">
+<div class="section-container">
+<div class="h-20 flex justify-between items-center">
+
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 bg-gradient-teal rounded-lg flex items-center justify-center shadow-lg">
+<span class="text-white font-bold text-lg">AK</span>
+</div>
+<div>
+<div class="text-xl font-bold text-white">Alok Kumar</div>
+<div class="text-xs text-cyan-500 uppercase">Enterprise QA Advisor</div>
+</div>
+</div>
+
+<div class="hidden lg:flex items-center space-x-8">
+<a href="index.html" class="text-sm font-semibold text-slate-400 hover:text-white uppercase">Home</a>
+<a href="about.html" class="text-sm font-semibold text-slate-400 hover:text-white uppercase">About</a>
+<a href="case-studies.html" class="text-sm font-semibold text-slate-400 hover:text-white uppercase">Case Studies</a>
+<a href="blog.html" class="text-sm font-semibold text-white uppercase">Insights</a>
+<a href="contact.html" class="text-sm font-semibold text-slate-400 hover:text-white uppercase">Contact</a>
+<a href="index.html#schedule" class="px-6 py-2.5 bg-gradient-teal text-white font-bold rounded-lg text-sm uppercase shadow-lg">Schedule Call</a>
+</div>
+
+</div>
+</div>
+</nav>
+
+<!-- HERO -->
+<section class="section-dark pt-32 pb-20 px-6">
+<div class="section-container">
+
+<h1 class="text-5xl lg:text-6xl font-bold text-white mb-6">
+Enterprise QA <span class="text-gradient">Insights</span>
+</h1>
+<p class="text-xl lg:text-2xl text-slate-400 mb-16">
+Expert frameworks and strategies for release governance
+</p>
+
+<div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+<!-- BLOG 1 -->
+<a href="blog/blog1.html" class="glass hover-lift p-8 rounded-2xl">
+<div class="w-full h-48 bg-gradient-to-br from-orange-500/20 to-red-500/20 rounded-2xl mb-6 flex items-center justify-center">
+<i data-lucide="trending-up" class="w-20 h-20 text-orange-400"></i>
+</div>
+<span class="px-3 py-1 bg-orange-500/20 text-orange-400 text-xs font-bold rounded-full">STRATEGY</span>
+<h2 class="text-2xl font-bold text-white mt-4 mb-3">Enterprise QA Strategy</h2>
+<p class="text-slate-400 mb-4">How to scale testing for high-growth SaaS products</p>
+</a>
+
+<!-- BLOG 2 -->
+<a href="blog/blog2.html" class="glass hover-lift p-8 rounded-2xl">
+<div class="w-full h-48 bg-gradient-to-br from-yellow-500/20 to-amber-500/20 rounded-2xl mb-6 flex items-center justify-center">
+<i data-lucide="clipboard-check" class="w-20 h-20 text-yellow-400"></i>
+</div>
+<span class="px-3 py-1 bg-yellow-500/20 text-yellow-400 text-xs font-bold rounded-full">RELEASE</span>
+<h2 class="text-2xl font-bold text-white mt-4 mb-3">Release Readiness Checklist</h2>
+<p class="text-slate-400 mb-4">Before production go-live governance</p>
+</a>
+
+<!-- BLOG 3 -->
+<a href="blog/blog3.html" class="glass hover-lift p-8 rounded-2xl">
+<div class="w-full h-48 bg-gradient-to-br from-purple-500/20 to-indigo-500/20 rounded-2xl mb-6 flex items-center justify-center">
+<i data-lucide="target" class="w-20 h-20 text-purple-400"></i>
+</div>
+<span class="px-3 py-1 bg-purple-500/20 text-purple-400 text-xs font-bold rounded-full">RISK</span>
+<h2 class="text-2xl font-bold text-white mt-4 mb-3">Risk-Based Testing Strategy</h2>
+<p class="text-slate-400 mb-4">Prioritize QA effort based on business impact</p>
+</a>
+
+<!-- BLOG 4 -->
+<a href="blog/blog4.html" class="glass hover-lift p-8 rounded-2xl">
+<div class="w-full h-48 bg-gradient-to-br from-red-500/20 to-pink-500/20 rounded-2xl mb-6 flex items-center justify-center">
+<i data-lucide="shield-alert" class="w-20 h-20 text-red-400"></i>
+</div>
+<span class="px-3 py-1 bg-red-500/20 text-red-400 text-xs font-bold rounded-full">QUALITY</span>
+<h2 class="text-2xl font-bold text-white mt-4 mb-3">Defect Leakage Prevention</h2>
+<p class="text-slate-400 mb-4">Stopping production defects before they happen</p>
+</a>
+
+<!-- BLOG 5 -->
+<a href="blog/blog5.html" class="glass hover-lift p-8 rounded-2xl">
+<div class="w-full h-48 bg-gradient-to-br from-emerald-500/20 to-green-500/20 rounded-2xl mb-6 flex items-center justify-center">
+<i data-lucide="bar-chart-3" class="w-20 h-20 text-emerald-400"></i>
+</div>
+<span class="px-3 py-1 bg-emerald-500/20 text-emerald-400 text-xs font-bold rounded-full">METRICS</span>
+<h2 class="text-2xl font-bold text-white mt-4 mb-3">QA Metrics for Executives</h2>
+<p class="text-slate-400 mb-4">Quality visibility through business-aligned KPIs</p>
+</a>
+
+<!-- BLOG 6 -->
+<a href="blog/blog6.html" class="glass hover-lift p-8 rounded-2xl">
+<div class="w-full h-48 bg-gradient-to-br from-cyan-600/20 to-blue-500/20 rounded-2xl mb-6 flex items-center justify-center">
+<i data-lucide="cpu" class="w-20 h-20 text-cyan-400"></i>
+</div>
+<span class="px-3 py-1 bg-cyan-600/20 text-cyan-400 text-xs font-bold rounded-full">FRAMEWORK</span>
+<h2 class="text-2xl font-bold text-white mt-4 mb-3">Automation vs Manual Testing Framework</h2>
+<p class="text-slate-400 mb-4">Finding the right balance for enterprise teams</p>
+</a>
+
+<!-- BLOG 7 -->
+<a href="blog/blog7.html" class="glass hover-lift p-8 rounded-2xl">
+<div class="w-full h-48 bg-gradient-to-br from-green-500/20 to-emerald-500/20 rounded-2xl mb-6 flex items-center justify-center">
+<i data-lucide="sparkles" class="w-20 h-20 text-green-400"></i>
+</div>
+<span class="px-3 py-1 bg-green-500/20 text-green-400 text-xs font-bold rounded-full">AI</span>
+<h2 class="text-2xl font-bold text-white mt-4 mb-3">AI In Testing</h2>
+<p class="text-slate-400 mb-4">Where AI accelerates QA and where humans lead</p>
+</a>
+
+<!-- BLOG 8 -->
+<a href="blog/blog8.html" class="glass hover-lift p-8 rounded-2xl">
+<div class="w-full h-48 bg-gradient-to-br from-orange-500/20 to-red-500/20 rounded-2xl mb-6 flex items-center justify-center">
+<i data-lucide="alert-circle" class="w-20 h-20 text-orange-400"></i>
+</div>
+<span class="px-3 py-1 bg-orange-500/20 text-orange-400 text-xs font-bold rounded-full">ROI</span>
+<h2 class="text-2xl font-bold text-white mt-4 mb-3">Poor Testing Costs Millions</h2>
+<p class="text-slate-400 mb-4">The hidden financial impact of weak QA practices</p>
+</a>
+
+</div>
+</div>
+</section>
+
+<footer class="footer-dark py-12 px-6 border-t border-white/5">
+<div class="section-container text-center text-slate-500 text-sm">
+<p>&copy; 2026 Alok Kumar. Enterprise QA & Release Governance Consultant.</p>
+<p class="mt-2 text-xs">Helping enterprises ship stable software with predictable releases.</p>
+</div>
+</footer>
+
+<script>
+lucide.createIcons();
+</script>
+
+</body>
+</html>
